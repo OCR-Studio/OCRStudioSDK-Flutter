@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">OCRSTUDIOSDK Sample</string>
+    <string name="message">Position the document within the frame</string>
+    <string name="title_activity_main">MainActivity</string>
+</resources>

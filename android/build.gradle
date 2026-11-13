@@ -1,0 +1,78 @@
+group = "ai.ocrstudio.sdk"
+version = "1.0"
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath("com.android.tools.build:gradle:9.4.0")
+    }
+}
+
+rootProject.allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+apply plugin: "com.android.library"
+
+android {
+    if (project.android.hasProperty("namespace")) {
+        namespace = "ai.ocrstudio.sdk"
+    }
+
+    compileSdk = 36
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        minSdk = 24
+    }
+
+    dependencies {
+        def camerax_version = "1.6.2"
+        // The following line is optional, as the core library is included indirectly by camera-camera2
+        implementation "androidx.camera:camera-core:${camerax_version}"
+        implementation "androidx.camera:camera-camera2:${camerax_version}"
+        // If you want to additionally use the CameraX Lifecycle library
+        implementation "androidx.camera:camera-lifecycle:${camerax_version}"
+        // If you want to additionally use the CameraX VideoCapture library
+        implementation "androidx.camera:camera-video:${camerax_version}"
+        // If you want to additionally use the CameraX View class
+        implementation "androidx.camera:camera-view:${camerax_version}"
+
+        implementation(platform("org.jetbrains.kotlin:kotlin-bom:2.4.20"))
+
+        implementation fileTree(include: ['*.jar'], dir: 'src/main/libs/')
+        implementation 'androidx.appcompat:appcompat:1.8.0'
+        implementation 'androidx.constraintlayout:constraintlayout:2.2.2'
+        implementation 'androidx.annotation:annotation:1.10.0'
+        implementation 'com.google.android.material:material:1.14.0'
+
+		// nfc libs
+		implementation "org.jmrtd:jmrtd:0.8.8"
+		implementation "net.sf.scuba:scuba-sc-android:0.0.27"
+    }
+    
+    buildFeatures {
+        dataBinding true
+    }
+
+    testOptions {
+        unitTests.all {
+            testLogging {
+               events "passed", "skipped", "failed", "standardOut", "standardError"
+               outputs.upToDateWhen {false}
+               showStandardStreams = true
+            }
+        }
+    }
+}
